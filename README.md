@@ -1,6 +1,8 @@
 # Models
 ## Este repositório contém a definição dos seguintes modelos SQLAlchemy:
 
+- **Todos os comando necessários estão dentro do arquivo Makefile, usando a diretiva "make <parametro>"**
+
 ## AtletaModel
 ### Tabela: atletas
 - Campos:
