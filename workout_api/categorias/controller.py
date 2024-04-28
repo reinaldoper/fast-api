@@ -2,14 +2,10 @@ from pydantic import UUID4
 from sqlalchemy.future import select
 from uuid import uuid4
 from fastapi import APIRouter, HTTPException, status, Body
-from fastapi_pagination import Page, paginate, add_pagination
 from workout_api.categorias.models import CategoriaModel
 from workout_api.categorias.schemas import Categoria, CategoriaOut
 from workout_api.contrib.dependencies import DatabaseDepencies
-from fastapi import FastAPI
-
-
-app = FastAPI(title="Pagination atleta", debug=True)
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
@@ -24,10 +20,14 @@ async def post(db_session: DatabaseDepencies, categoria_in: Categoria = Body(...
     return categorias_out
    
 
-@router.get('/', summary='Retornar todas as categorias', status_code=status.HTTP_200_OK, response_model=Page[list[CategoriaOut]])
-async def query(db_session: DatabaseDepencies) -> list[CategoriaOut]:
-    categorias: list[CategoriaOut] = (await db_session.execute(select(CategoriaModel))).scalars().all()
-    return paginate(categorias)
+@router.get('/', summary='Retornar todas as categorias',
+            status_code=status.HTTP_200_OK, 
+            response_model=list[CategoriaOut])
+async def query(db_session: DatabaseDepencies,
+                offset: int = 0, limit: int = 10) -> list[CategoriaOut]:
+    
+    async with db_session as session:
+        return await paginate(session, offset, limit)
 
  
 @router.get('/{id}', summary='Retornar uma categoria pelo id', status_code=status.HTTP_200_OK, response_model=CategoriaOut)
@@ -38,4 +38,11 @@ async def query_id(id: UUID4, db_session: DatabaseDepencies) -> CategoriaOut:
     return categoria
 
 
-add_pagination(app)
+async def paginate(db: AsyncSession,
+                   offset: int | None = None,
+                   limit: int | None = None) -> list[CategoriaOut]:
+    async with db as session:
+        async with session.begin():
+            stmt = select(CategoriaModel).offset(offset).limit(limit)
+            result = await session.execute(stmt)
+            return [row for row in result.scalars()]

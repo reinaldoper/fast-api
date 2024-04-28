@@ -21,3 +21,6 @@ settings:
 
 paginate:
 	@pip install fastapi-pagination
+
+install:
+	@pip install -r requirements.txt

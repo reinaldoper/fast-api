@@ -3,6 +3,12 @@
 
 - **Todos os comando necessários estão dentro do arquivo Makefile, usando a diretiva "make <parametro>"**
 
+- Instalar todas as dependencias:
+
+```shell
+make install
+```
+
 ## AtletaModel
 ### Tabela: atletas
 - Campos:
