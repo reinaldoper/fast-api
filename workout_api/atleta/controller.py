@@ -82,7 +82,6 @@ async def query_atleta(cpf: str,
     return categoria
 
 
-
 async def paginate(db: AsyncSession,
                    offset: int | None = None,
                    limit: int | None = None) -> list[AtletaOut]:
