@@ -6,19 +6,19 @@
 - Cria virtual env:
 
 ```shell
-make create-virtual
+python -m venv .venv
 ```
 
 - Ativa virtual env:
 
 ```shell
-make activate
+source .venv/bin/activate
 ```
 
 - Desativa virtual env:
 
 ```shell
-make deactivate
+deactivate
 ```
 
 - Instalar todas as dependencias:
