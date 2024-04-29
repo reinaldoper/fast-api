@@ -9,6 +9,26 @@
 make install
 ```
 
+```shell
+make install
+```
+
+- Sobe o docker-compose:
+
+```shell
+make docker
+```
+
+- Sobe o servidor:
+
+```shell
+make run
+```
+
+- Documentação da aplicação:
+
+- [fastAPIServer](http://127.0.0.1:8000/docs)
+
 ## AtletaModel
 ### Tabela: atletas
 - Campos:
