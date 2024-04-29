@@ -63,24 +63,24 @@ async def query_id(id: UUID4, db_session: DatabaseDepencies) -> AtletaOut:
     return categoria
 
 
-@router.get('/query', summary='Retornar uma categoria pelo nome ou cpf', 
-            status_code=status.HTTP_200_OK, response_model=AtletaOut)
-async def query_atleta(nome: str | None, cpf: str | None,
+@router.patch('/categoria', summary='Retornar uma categoria pelo nome ou cpf', 
+              status_code=status.HTTP_200_OK, response_model=AtletaOut)
+async def query_atleta(cpf: str,
                        db_session: DatabaseDepencies) -> AtletaOut:
-    if not nome and not cpf:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Forneça nome ou cpf")
+    if not cpf:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Forneça o cpf")
     
-    query = await select(AtletaModel)
-    if nome:
-        query = await query.filter(AtletaModel.nome == nome)
+    query = select(AtletaModel)
+    
     if cpf:
-        query = await query.filter(AtletaModel.cpf == cpf)
+        query = query.filter(AtletaModel.cpf == cpf)
 
     categoria: AtletaOut = (await db_session.execute(query)).scalars().first()
     if not categoria:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Atleta not found")
     
     return categoria
+
 
 
 async def paginate(db: AsyncSession,
