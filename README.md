@@ -9,14 +9,22 @@
 make install
 ```
 
-```shell
-make install
-```
-
 - Sobe o docker-compose:
 
 ```shell
 make docker
+```
+
+- Cria as migrations:
+
+```shell
+make create-migrations
+```
+
+- Roda as migrations:
+
+```shell
+make run-migrations
 ```
 
 - Sobe o servidor:
