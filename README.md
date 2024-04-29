@@ -3,6 +3,24 @@
 
 - **Todos os comando necessários estão dentro do arquivo Makefile, usando a diretiva "make <parametro>"**
 
+- Cria virtual env:
+
+```shell
+make create-virtual
+```
+
+- Ativa virtual env:
+
+```shell
+make activate
+```
+
+- Desativa virtual env:
+
+```shell
+make deactivate
+```
+
 - Instalar todas as dependencias:
 
 ```shell
