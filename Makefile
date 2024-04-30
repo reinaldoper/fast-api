@@ -25,3 +25,9 @@ paginate:
 install:
 	@pip install -r requirements.txt
 
+alembic:
+	@pip install alembic
+
+alembic-init:
+	@alembic init alembic
+
